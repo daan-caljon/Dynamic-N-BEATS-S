@@ -3,7 +3,7 @@ library(forecast)
 library(data.table)
 library(magrittr)
 
-path <- '/Users/jentevanbelle/Documents/NBeats stability/M3_results_prob/'
+path <- ''
 
 # M3S <- subset(M3, 'monthly')
 # M3S_freq <- 12
