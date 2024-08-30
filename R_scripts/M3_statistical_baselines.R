@@ -5,10 +5,10 @@ library(magrittr)
 
 path <- ''
 
-# M3S <- subset(M3, 'monthly')
-# M3S_freq <- 12
-# M3S_h <- 6
-# M3S_o <- 13
+M3S <- subset(M3, 'monthly')
+M3S_freq <- 12
+M3S_h <- 6
+M3S_o <- 13
 
 # M3S <- subset(M3, 'quarterly')
 # M3S_freq <- 4
@@ -20,10 +20,10 @@ path <- ''
 # M3S_h <- 2
 # M3S_o <- 5
 
-M3S <- subset(M3, 'other')
-M3S_freq <- 1
-M3S_h <- 2
-M3S_o <- 7
+# M3S <- subset(M3, 'other')
+# M3S_freq <- 1
+# M3S_h <- 2
+# M3S_o <- 7
 
 ##############
 #ets forecasts
@@ -86,7 +86,7 @@ registerDoSEQ()
 colnames(ets_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M3S_h), 'type')
 ets_forecasts_dt <- ets_forecasts_df %>% data.table()
 
-# fwrite(ets_forecasts_dt, paste0(path, 'M3O_ETS_probabilistic.csv'))
+fwrite(ets_forecasts_dt, paste0(path, 'M3M_ETS_probabilistic.csv'))
 
 ##############
 #arima forecasts
@@ -149,7 +149,7 @@ registerDoSEQ()
 colnames(arima_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M3S_h), 'type')
 arima_forecasts_dt <- arima_forecasts_df %>% data.table()
 
-# fwrite(arima_forecasts_dt, paste0(path, 'M3O_arima_probabilistic.csv'))
+fwrite(arima_forecasts_dt, paste0(path, 'M3M_arima_probabilistic.csv'))
 
 ##############
 #theta forecasts
@@ -211,4 +211,4 @@ registerDoSEQ()
 colnames(theta_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M3S_h), 'type')
 theta_forecasts_dt <- theta_forecasts_df %>% data.table()
 
-# fwrite(theta_forecasts_dt, paste0(path, 'M3O_theta_probabilistic.csv'))
+fwrite(theta_forecasts_dt, paste0(path, 'M3M_theta_probabilistic.csv'))
