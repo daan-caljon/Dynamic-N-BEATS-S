@@ -30,14 +30,14 @@ The ```requirements.txt``` provides the necessary packages.
 All code was written for ```python 3.10.13```.
 
 ## Usage
-Change the ```DIR``` variable to your directory in ```main.py```. Set the relevant hyperparameters for the dynamic loss weighting extension you want to run (see hyperparameter table in paper). Each run/sweep produces a ```.csv``` file with the forecasts.  [Weights & Biases](https://wandb.ai/site) is used to log (intermediary) results.
+Change the ```DIR``` variable to your directory in ```main.py```. Set the relevant hyperparameters for the dynamic loss weighting (DLW) extension you want to run (see hyperparameter table in paper). Each run/sweep produces a ```.csv``` file with the forecasts.  [Weights & Biases](https://wandb.ai/site) is used to log (intermediary) results.
 
 To run the statistical baselines, first download the M4 Monthly train and test ```.csv``` files from [Kaggle](https://www.kaggle.com/datasets/yogesh94/m4-forecasting-competition-dataset). Save these files as indicated in the folder structure above. Then, run the ```*_statistical_baselines.R``` files.
 
-To generate the results reported in the paper, run the different extension with 5 seeds. Next, put the ```.csv``` files into the right folders (see ```M3-M4_evaluation.R```). Running this file will generate both the tables and MCB plots.
+To generate the results reported in the paper, run the different DLW extensions with 5 seeds. Next, put the ```.csv``` files into the right folders (see ```M3-M4_evaluation.R```). Running this file will generate both the tables and MCB plots.
 
 ## Acknowledgements
-Our code builds upon the code from [Van Belle et al. (2023)](https://github.com/VerbekeLab/n-beats-s). 
+Our code builds upon the code from [Van Belle et al. (2023)](https://github.com/VerbekeLab/n-beats-s).
 
 To implement the dynamic loss weighting methods we used the following repos as a starting point:
 
