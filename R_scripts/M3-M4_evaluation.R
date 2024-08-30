@@ -4,20 +4,20 @@ library(magrittr)
 library(Mcomp)
 library(stringr)
 library(DescTools)
-print(R.home())
+
 ########################## Actuals ##########################
 ## Load (raw) actuals for M3 and M4
 ## We collect actuals for both the test sets and training sets
 ## Training actuals can be used for MASE/RMSSE scaling later on
 
 #############################################################
-setwd(dirname(file.choose()))
+setwd(choose.dir())
 dataset_subset <- 'Monthly' #'Other' 
 dataset_subset_indicator <- 'M' #'O'
 FH <- 18#8#18
 FL <- 6#2#6
 FO <- 13#7#13
-dataset_selection <- 'M3' #'M3'
+dataset_selection <- 'M4' #'M3'
 #############################################################
 #6.5x5
 
@@ -69,10 +69,9 @@ if (dataset_selection == 'M3'){
   
 } else if (dataset_selection == 'M4') {
   
-  #MS_actuals_train <- fread(paste0('/Users/jentevanbelle/Documents/NBeats stability/M4DataSet/', dataset_subset, '-train.csv'))
-  #MS_actuals_test <- fread(paste0('/Users/jentevanbelle/Documents/NBeats stability/M4DataSet/', dataset_subset, '-test.csv'))
-  MS_actuals_train <- fread(paste0(dataset_subset, '-train.csv'))
-  MS_actuals_test <- fread(paste0(dataset_subset, '-test.csv'))
+  M4_monthly_data_path <- paste0('M4DataSet/',dataset_subset)
+  MS_actuals_train <- fread(paste0(M4_monthly_data_path, '-train.csv'))
+  MS_actuals_test <- fread(paste0(M4_monthly_data_path, '-test.csv'))
   
   max_l <- ncol(MS_actuals_train)-1
   
