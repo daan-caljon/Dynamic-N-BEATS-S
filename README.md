@@ -43,7 +43,7 @@ To implement the dynamic loss weighting methods we used the following repos as a
 
 - Lucas Bo Tang for GradNorm: [https://github.com/LucasBoTang/GradNorm](https://github.com/LucasBoTang/GradNorm)
 - Aviv Navon for Gradient Cosine Similarity Aviv Navon ([https://avivnavon.github.io/AuxiLearn/](https://avivnavon.github.io/AuxiLearn/))
-- The LibMTL library for uncertainty weighting [https://github.com/median-research-group/LibMTL](https://github.com/median-research-group/LibMTL)
+- The LibMTL library for uncertainty weighting ([https://github.com/median-research-group/LibMTL](https://github.com/median-research-group/LibMTL))
 
 Reference:
 
