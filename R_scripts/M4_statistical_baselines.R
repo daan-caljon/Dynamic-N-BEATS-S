@@ -84,67 +84,67 @@ end_ts <- length(unique(M4S_actuals_all$item_id))
 iterations <- end_ts - start_ts + 1
 pb <- txtProgressBar(min = 1, max = iterations , style = 3)
 
-# ##############
-# #ETS forecasts
-# ##############
-# 
-# starttime <- Sys.time()
-# 
-# ets_forecasts_df <- foreach(id = c(start_ts:end_ts), .combine = 'rbind', .packages = 'forecast') %dopar% {
-# 
-#   ets_forecasts_mean_df <- data.frame()
-#   # ets_forecasts_sd_df <- data.frame()
-#   # ets_insample_sd_df <- data.frame()
-# 
-#   ts <- M4S_actuals_all_df[which(M4S_actuals_all_df$item_id == id),]$value
-# 
-#     counter <- 1
-#     for (fc_origin in 1:M4S_o){
-#       
-#       ts_origin <- ts(ts[1:(length(ts)-(M4S_oh-(fc_origin-1)))], frequency = M4S_freq)
-# 
-#       ets_fit <- ets(ts_origin)
-#       ets_forecasts <- forecast(ets_fit, h = M4S_h, PI = FALSE)
-#       # ets_forecasts <- forecast(ets_fit, h = M4S_h, PI = TRUE, level = c(0.9))
-# 
-#       ets_forecasts_mean_df[counter, 1] <- id
-#       ets_forecasts_mean_df[counter, 2] <- fc_origin
-#       ets_forecasts_mean_df[counter, c(3:(3+M4S_h-1))] <- ets_forecasts$mean
-#       ets_forecasts_mean_df[counter, (3+M4S_h)] <- 'mean_forecast'
-# 
-#       # ets_forecasts_sd_df[counter, 1] <- id
-#       # ets_forecasts_sd_df[counter, 2] <- fc_origin
-#       # #ets_forecasts_sd_df[counter, c(3:(3+M4S_h-1))] <- (ets_forecasts$upper - ets_forecasts$mean)/qnorm(0.9) - error in first version
-#       # ets_forecasts_sd_df[counter, c(3:(3+M4S_h-1))] <- (ets_forecasts$upper - ets_forecasts$mean)/qnorm(0.95)
-#       # ets_forecasts_sd_df[counter, (3+M4S_h)] <- 'sd_forecast'
-#       # 
-#       # ets_insample_sd_df[counter, 1] <- id
-#       # ets_insample_sd_df[counter, 2] <- fc_origin
-#       # ets_insample_sd_df[counter, c(3:(3+M4S_h-1))] <- rep(accuracy(ets_fit)[2], M4S_h)
-#       # # ets_insample_sd_df[counter, c(3:(3+M4S_h-1))] <- rep(accuracy(x = ets_forecasts$x,
-#       # #                                                     f = ets_forecasts$fitted)[2], M4S_h)
-#       # ets_insample_sd_df[counter, (3+M4S_h)] <- 'sd_insample'
-# 
-#       counter <- counter+1
-#     }
-# 
-#     setTxtProgressBar(pb, (id-start_ts+1))
-#     #output
-#     return(ets_forecasts_mean_df)
-#     # rbind(ets_forecasts_mean_df, ets_forecasts_sd_df, ets_insample_sd_df)
-# 
-# }
-# 
-# close(pb)
-# stopCluster(cl)
-# registerDoSEQ()
-# 
-# colnames(ets_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M4S_h), 'type')
-# ets_forecasts_dt <- ets_forecasts_df %>% data.table()
-# 
-# Sys.time() - starttime
-# 
-# fwrite(ets_forecasts_dt, paste0(write_path, 'M4', M4S_abbr, '_ETS.csv'))
+##############
+#ETS forecasts
+##############
+
+starttime <- Sys.time()
+
+ets_forecasts_df <- foreach(id = c(start_ts:end_ts), .combine = 'rbind', .packages = 'forecast') %dopar% {
+
+  ets_forecasts_mean_df <- data.frame()
+  # ets_forecasts_sd_df <- data.frame()
+  # ets_insample_sd_df <- data.frame()
+
+  ts <- M4S_actuals_all_df[which(M4S_actuals_all_df$item_id == id),]$value
+
+    counter <- 1
+    for (fc_origin in 1:M4S_o){
+      
+      ts_origin <- ts(ts[1:(length(ts)-(M4S_oh-(fc_origin-1)))], frequency = M4S_freq)
+
+      ets_fit <- ets(ts_origin)
+      ets_forecasts <- forecast(ets_fit, h = M4S_h, PI = FALSE)
+      # ets_forecasts <- forecast(ets_fit, h = M4S_h, PI = TRUE, level = c(0.9))
+
+      ets_forecasts_mean_df[counter, 1] <- id
+      ets_forecasts_mean_df[counter, 2] <- fc_origin
+      ets_forecasts_mean_df[counter, c(3:(3+M4S_h-1))] <- ets_forecasts$mean
+      ets_forecasts_mean_df[counter, (3+M4S_h)] <- 'mean_forecast'
+
+      # ets_forecasts_sd_df[counter, 1] <- id
+      # ets_forecasts_sd_df[counter, 2] <- fc_origin
+      # #ets_forecasts_sd_df[counter, c(3:(3+M4S_h-1))] <- (ets_forecasts$upper - ets_forecasts$mean)/qnorm(0.9) - error in first version
+      # ets_forecasts_sd_df[counter, c(3:(3+M4S_h-1))] <- (ets_forecasts$upper - ets_forecasts$mean)/qnorm(0.95)
+      # ets_forecasts_sd_df[counter, (3+M4S_h)] <- 'sd_forecast'
+      # 
+      # ets_insample_sd_df[counter, 1] <- id
+      # ets_insample_sd_df[counter, 2] <- fc_origin
+      # ets_insample_sd_df[counter, c(3:(3+M4S_h-1))] <- rep(accuracy(ets_fit)[2], M4S_h)
+      # # ets_insample_sd_df[counter, c(3:(3+M4S_h-1))] <- rep(accuracy(x = ets_forecasts$x,
+      # #                                                     f = ets_forecasts$fitted)[2], M4S_h)
+      # ets_insample_sd_df[counter, (3+M4S_h)] <- 'sd_insample'
+
+      counter <- counter+1
+    }
+
+    setTxtProgressBar(pb, (id-start_ts+1))
+    #output
+    return(ets_forecasts_mean_df)
+    # rbind(ets_forecasts_mean_df, ets_forecasts_sd_df, ets_insample_sd_df)
+
+}
+
+close(pb)
+stopCluster(cl)
+registerDoSEQ()
+
+colnames(ets_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M4S_h), 'type')
+ets_forecasts_dt <- ets_forecasts_df %>% data.table()
+
+Sys.time() - starttime
+
+fwrite(ets_forecasts_dt, paste0(write_path, 'M4', M4S_abbr, '_ETS.csv'))
 
 ##############
 #arima forecasts
@@ -215,55 +215,55 @@ fwrite(arima_forecasts_dt, paste0(write_path, 'M4', M4S_abbr, '_arima.csv'))
 # ##############
 # #theta forecasts
 # ##############
-# 
-# starttime <- Sys.time()
-# 
-# theta_forecasts_df <- foreach(id = c(start_ts:end_ts), .combine = 'rbind', .packages = 'forecast') %dopar% {
-# 
-#   theta_forecasts_mean_df <- data.frame()
-#   # theta_forecasts_sd_df <- data.frame()
-#   # theta_insample_sd_df <- data.frame()
-# 
-#   ts <- M4S_actuals_all_df[which(M4S_actuals_all_df$item_id == id),]$value
-# 
-#   counter <- 1
-#   for (fc_origin in 1:M4S_o){
-# 
-#     ts_origin <- ts(ts[1:(length(ts)-(M4S_oh-(fc_origin-1)))], frequency = M4S_freq)
-# 
-#     theta_forecasts <- thetaf(ts_origin, h = M4S_h)#, level = c(0.9))
-# 
-#     theta_forecasts_mean_df[counter, 1] <- id
-#     theta_forecasts_mean_df[counter, 2] <- fc_origin
-#     theta_forecasts_mean_df[counter, c(3:(3+M4S_h-1))] <- theta_forecasts$mean
-#     theta_forecasts_mean_df[counter, (3+M4S_h)] <- 'mean_forecast'
-# 
-#     # theta_forecasts_sd_df[counter, 1] <- id
-#     # theta_forecasts_sd_df[counter, 2] <- fc_origin
-#     # theta_forecasts_sd_df[counter, c(3:(3+M4S_h-1))] <- (theta_forecasts$upper - theta_forecasts$mean)/qnorm(0.95)
-#     # theta_forecasts_sd_df[counter, (3+M4S_h)] <- 'sd_forecast'
-#     # 
-#     # theta_insample_sd_df[counter, 1] <- id
-#     # theta_insample_sd_df[counter, 2] <- fc_origin
-#     # theta_insample_sd_df[counter, c(3:(3+M4S_h-1))] <- rep(accuracy(x = theta_forecasts$x,
-#     #                                                       f = theta_forecasts$fitted)[2], M4S_h)
-#     # theta_insample_sd_df[counter, (3+M4S_h)] <- 'sd_insample'
-# 
-#     counter <- counter+1
-#   }
-# 
-#   #output
-#   return(theta_forecasts_mean_df)
-#   # rbind(theta_forecasts_mean_df, theta_forecasts_sd_df, theta_insample_sd_df)
-# 
-# }
-# 
-# stopCluster(cl)
-# registerDoSEQ()
-# 
-# colnames(theta_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M4S_h), 'type')
-# theta_forecasts_dt <- theta_forecasts_df %>% data.table()
-# 
-# Sys.time() - starttime
-# 
-# fwrite(theta_forecasts_dt, paste0(write_path, 'M4', M4S_abbr, '_theta.csv'))
+
+starttime <- Sys.time()
+
+theta_forecasts_df <- foreach(id = c(start_ts:end_ts), .combine = 'rbind', .packages = 'forecast') %dopar% {
+
+  theta_forecasts_mean_df <- data.frame()
+  # theta_forecasts_sd_df <- data.frame()
+  # theta_insample_sd_df <- data.frame()
+
+  ts <- M4S_actuals_all_df[which(M4S_actuals_all_df$item_id == id),]$value
+
+  counter <- 1
+  for (fc_origin in 1:M4S_o){
+
+    ts_origin <- ts(ts[1:(length(ts)-(M4S_oh-(fc_origin-1)))], frequency = M4S_freq)
+
+    theta_forecasts <- thetaf(ts_origin, h = M4S_h)#, level = c(0.9))
+
+    theta_forecasts_mean_df[counter, 1] <- id
+    theta_forecasts_mean_df[counter, 2] <- fc_origin
+    theta_forecasts_mean_df[counter, c(3:(3+M4S_h-1))] <- theta_forecasts$mean
+    theta_forecasts_mean_df[counter, (3+M4S_h)] <- 'mean_forecast'
+
+    # theta_forecasts_sd_df[counter, 1] <- id
+    # theta_forecasts_sd_df[counter, 2] <- fc_origin
+    # theta_forecasts_sd_df[counter, c(3:(3+M4S_h-1))] <- (theta_forecasts$upper - theta_forecasts$mean)/qnorm(0.95)
+    # theta_forecasts_sd_df[counter, (3+M4S_h)] <- 'sd_forecast'
+    # 
+    # theta_insample_sd_df[counter, 1] <- id
+    # theta_insample_sd_df[counter, 2] <- fc_origin
+    # theta_insample_sd_df[counter, c(3:(3+M4S_h-1))] <- rep(accuracy(x = theta_forecasts$x,
+    #                                                       f = theta_forecasts$fitted)[2], M4S_h)
+    # theta_insample_sd_df[counter, (3+M4S_h)] <- 'sd_insample'
+
+    counter <- counter+1
+  }
+
+  #output
+  return(theta_forecasts_mean_df)
+  # rbind(theta_forecasts_mean_df, theta_forecasts_sd_df, theta_insample_sd_df)
+
+}
+
+stopCluster(cl)
+registerDoSEQ()
+
+colnames(theta_forecasts_df) <- c('item_id', 'fc_origin', as.character(1:M4S_h), 'type')
+theta_forecasts_dt <- theta_forecasts_df %>% data.table()
+
+Sys.time() - starttime
+
+fwrite(theta_forecasts_dt, paste0(write_path, 'M4', M4S_abbr, '_theta.csv'))
