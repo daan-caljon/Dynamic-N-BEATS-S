@@ -3,7 +3,7 @@ import numpy as np
 
 def read_data(dataset):
     if dataset == "M3_Monthly":
-        df = pd.read_csv(r"C:\Users\u0165132\OneDrive - KU Leuven\1-PhD\Thesis 2023\Adaptive-N-BEATS-S-main\Dynamic Weighting N-BEATS-S\data\M3_monthly_TSTS.csv")
+        df = pd.read_csv(r"")
 
         mydata = list()
         temp_list = list()
