@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.Rhistory
+*.csv
+*.pdf
+*.zip
+R scripts/M3_Monthly_*/
+R scripts/M4_Monthly_*/
+R scripts/tables
+R scripts/figures

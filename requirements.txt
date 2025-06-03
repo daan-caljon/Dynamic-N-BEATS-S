@@ -1,0 +1,9 @@
+numpy
+matplotlib
+pandas
+plotly
+pytorch-cuda=12.1
+torchaudio
+torchvision
+wandb
+cvxpy>=1.5,<1.6
