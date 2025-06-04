@@ -1,5 +1,5 @@
 # Using dynamic loss weighting to boost improvements in forecast stability
-This repository provides the code for the paper *"Using dynamic loss weighting to boost improvements in forecast stability"*.
+This repository provides the code for the paper [*"Using dynamic loss weighting to boost improvements in forecast stability"*](https://arxiv.org/abs/2409.18267).
 
 The structure of the code is as follows:
 ```
