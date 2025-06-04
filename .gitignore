@@ -8,3 +8,5 @@ R scripts/M3_Monthly_*/
 R scripts/M4_Monthly_*/
 R scripts/tables
 R scripts/figures
+!data/*
+Zipped version/*
