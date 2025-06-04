@@ -43,7 +43,7 @@ The ```requirements.txt``` provides the necessary packages. All code was written
   - `openxlsxx 4.2.5.2`  
   - `data.table 1.15.0`
 ## Data
-The M4 Monthly and M3 Monthly publicly available datasets are used. The M3 dataset is provided in the ```data``` folder. The M4 dataset is automatically downloaded online in ```Learner.py```. For the R scripts, the M4 dataset is provided as the ```Monthly-test.csv``` and ```Monthly-train.csv``` files. These files can be found on [Kaggle](https://www.kaggle.com/datasets/yogesh94/m4-forecasting-competition-dataset).
+The M4 Monthly and M3 Monthly publicly available datasets are used. The M3 dataset is provided in the ```data``` folder. The M4 dataset is automatically downloaded online in ```Learner.py```. For the R scripts, the M4 dataset is provided as the ```Monthly-test.csv``` and ```Monthly-train.csv``` files. These files can be found on [Kaggle](https://www.kaggle.com/datasets/yogesh94/m4-forecasting-competition-dataset) and should be placed in the R scripts folder.
 ## Usage
 To efficiently run this code, access to a CUDA-enabled GPU is required.
 
