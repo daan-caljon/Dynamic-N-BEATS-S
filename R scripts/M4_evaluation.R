@@ -458,50 +458,6 @@ MS_AuxiNash <- MS_METHOD_PREP(MS_AuxiNash)
 MS_METHOD_RESULTS(MS_AuxiNash, 'AuxiNash')
 
 
-MS_SMAPE %>% colMeans() %>% round(2)
-MS_SMAPC %>% colMeans() %>% round(2)
-MS_RMSSE %>% colMeans() %>% round(3)
-MS_RMSSC %>% colMeans() %>% round(3)
-# Step 1: Compute column means and round
-sMAPE <- MS_SMAPE %>% colMeans() %>% round(2)
-sMAPC <- MS_SMAPC %>% colMeans() %>% round(2)
-RMSSE <- MS_RMSSE %>% colMeans() %>% round(3)
-RMSSC <- MS_RMSSC %>% colMeans() %>% round(3)
-
-# Step 2: Convert each to a one-row data frame
-df_sMAPE <- as.data.frame(t(sMAPE))
-df_sMAPC <- as.data.frame(t(sMAPC))
-df_RMSSE <- as.data.frame(t(RMSSE))
-df_RMSSC <- as.data.frame(t(RMSSC))
-
-# Step 3: Write each to a separate CSV
-write.csv(df_sMAPE, "sMAPE_summary.csv", row.names = FALSE)
-write.csv(df_sMAPC, "sMAPC_summary.csv", row.names = FALSE)
-write.csv(df_RMSSE, "RMSSE_summary.csv", row.names = FALSE)
-write.csv(df_RMSSC, "RMSSC_summary.csv", row.names = FALSE)
-
-
-########################## Statistical comparison ##########################
-library(tsutils)
-
-# Replace NA values by base model for rankings
-
-# MS_SMAPE[, NBEATS_DROP := NBEATS]
-# MS_SMAPC[, NBEATS_DROP := NBEATS]
-
-# MS_SMAPE[, NBEATS_WD := NBEATS]
-# MS_SMAPC[, NBEATS_WD := NBEATS]
-
-# MS_SMAPE[, NBEATSS_WD := NBEATSS]
-# MS_SMAPC[, NBEATSS_WD := NBEATSS]
-
-# MS_RMSSE[, NBEATS_DROP := NBEATS]
-# MS_RMSSC[, NBEATS_DROP := NBEATS]
-
-
-
-
-
 setnames(MS_SMAPE, 
          names(MS_SMAPE),
          c('ID',
@@ -526,18 +482,83 @@ setnames(MS_RMSSC,
            "ETS","ARIMA", "THETA","N-BEATS", 'N-BEATS-S low',"N-BEATS-S high",
            "GradNorm","Weighted GCosSim","GCosSim", "RW", "TARW high","TARW low", 
            "UW","NashMTL",'AuxiNash'))
+MS_SMAPE %>% colMeans() %>% round(2)
+MS_SMAPC %>% colMeans() %>% round(2)
+MS_RMSSE %>% colMeans() %>% round(3)
+MS_RMSSC %>% colMeans() %>% round(3)
+# Step 1: Compute column means and round
+sMAPE <- MS_SMAPE %>% colMeans() %>% round(2)
+sMAPC <- MS_SMAPC %>% colMeans() %>% round(2)
+RMSSE <- MS_RMSSE %>% colMeans() %>% round(3)
+RMSSC <- MS_RMSSC %>% colMeans() %>% round(3)
 
-MCB_SMAPE <- nemenyi(as.matrix(MS_SMAPE[,2:16]), plottype = 'vmcb')
-grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+# Step 2: Convert each to a one-row data frame
+df_sMAPE <- as.data.frame(t(sMAPE))
+df_sMAPC <- as.data.frame(t(sMAPC))
+df_RMSSE <- as.data.frame(t(RMSSE))
+df_RMSSC <- as.data.frame(t(RMSSC))
 
-MCB_SMAPC <- nemenyi(as.matrix(MS_SMAPC[,2:16]), plottype = 'vmcb')
-grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+# Step 3: Write each to a separate CSV
+write.csv(df_sMAPE, "tables/M4sMAPE.csv", row.names = FALSE)
+write.csv(df_sMAPC, "tables/M4sMAPC.csv", row.names = FALSE)
+write.csv(df_RMSSE, "tables/M4RMSSE.csv", row.names = FALSE)
+write.csv(df_RMSSC, "tables/M4RMSSC.csv", row.names = FALSE)
 
-MCB_RMSSE <- nemenyi(as.matrix(MS_RMSSE[,2:16]), plottype = 'vmcb')
-grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
 
-MCB_RMSSC <- nemenyi(as.matrix(MS_RMSSC[,2:16]), plottype = 'vmcb',cex = 1.2)
+########################## Statistical comparison ##########################
+library(tsutils)
+
+# Replace NA values by base model for rankings
+
+# MS_SMAPE[, NBEATS_DROP := NBEATS]
+# MS_SMAPC[, NBEATS_DROP := NBEATS]
+
+# MS_SMAPE[, NBEATS_WD := NBEATS]
+# MS_SMAPC[, NBEATS_WD := NBEATS]
+
+# MS_SMAPE[, NBEATSS_WD := NBEATSS]
+# MS_SMAPC[, NBEATSS_WD := NBEATSS]
+
+# MS_RMSSE[, NBEATS_DROP := NBEATS]
+# MS_RMSSC[, NBEATS_DROP := NBEATS]
+
+
+
+
+
+# Define width and height once
+fig_width <- 6
+fig_height <- 6
+
+# Create directory if it doesn't exist
+if (!dir.exists("figures")) dir.create("figures")
+
+########################## Save Nemenyi plots to PDF ##########################
+
+# sMAPE
+pdf(paste0("figures/", dataset_selection, "_MCB_SMAPE.pdf"), width = fig_width, height = fig_height)
+MCB_SMAPE <- nemenyi(as.matrix(MS_SMAPE[, 2:16]), plottype = 'vmcb')
 grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
+# sMAPC
+pdf(paste0("figures/", dataset_selection, "_MCB_SMAPC.pdf"), width = fig_width, height = fig_height)
+MCB_SMAPC <- nemenyi(as.matrix(MS_SMAPC[, 2:16]), plottype = 'vmcb')
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
+# RMSSE
+pdf(paste0("figures/", dataset_selection, "_MCB_RMSSE.pdf"), width = fig_width, height = fig_height)
+MCB_RMSSE <- nemenyi(as.matrix(MS_RMSSE[, 2:16]), plottype = 'vmcb')
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
+# RMSSC
+pdf(paste0("figures/", dataset_selection, "_MCB_RMSSC.pdf"), width = fig_width, height = fig_height)
+MCB_RMSSC <- nemenyi(as.matrix(MS_RMSSC[, 2:16]), plottype = 'vmcb', cex = 1.2)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
 
 # print(MCB_SMAPE$intervals)
 # 

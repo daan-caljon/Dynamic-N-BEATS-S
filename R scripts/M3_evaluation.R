@@ -458,6 +458,30 @@ MS_AuxiNash <- MS_METHOD_PREP(MS_AuxiNash)
 MS_METHOD_RESULTS(MS_AuxiNash, 'AuxiNash')
 
 
+setnames(MS_SMAPE, 
+         names(MS_SMAPE),
+         c('ID',
+           "ETS","ARIMA", "THETA","N-BEATS", 'N-BEATS-S low',"N-BEATS-S high",
+           "GradNorm","Weighted GCosSim","GCosSim", "RW", "TARW high","TARW low", 
+           "UW","NashMTL",'AuxiNash'))
+setnames(MS_SMAPC, 
+         names(MS_SMAPC),
+         c('ID',
+           "ETS","ARIMA", "THETA","N-BEATS", 'N-BEATS-S low',"N-BEATS-S high",
+           "GradNorm","Weighted GCosSim","GCosSim", "RW", "TARW high","TARW low", 
+           "UW","NashMTL",'AuxiNash'))
+setnames(MS_RMSSE, 
+         names(MS_RMSSE),
+         c('ID',
+           "ETS","ARIMA", "THETA","N-BEATS", 'N-BEATS-S low',"N-BEATS-S high",
+           "GradNorm","Weighted GCosSim","GCosSim", "RW", "TARW high","TARW low", 
+           "UW","NashMTL",'AuxiNash'))
+setnames(MS_RMSSC, 
+         names(MS_RMSSC),
+         c('ID',
+           "ETS","ARIMA", "THETA","N-BEATS", 'N-BEATS-S low',"N-BEATS-S high",
+           "GradNorm","Weighted GCosSim","GCosSim", "RW", "TARW high","TARW low", 
+           "UW","NashMTL",'AuxiNash'))
 MS_SMAPE %>% colMeans() %>% round(2)
 MS_SMAPC %>% colMeans() %>% round(2)
 MS_RMSSE %>% colMeans() %>% round(3)
@@ -475,10 +499,10 @@ df_RMSSE <- as.data.frame(t(RMSSE))
 df_RMSSC <- as.data.frame(t(RMSSC))
 
 # Step 3: Write each to a separate CSV
-write.csv(df_sMAPE, "sMAPE_summary.csv", row.names = FALSE)
-write.csv(df_sMAPC, "sMAPC_summary.csv", row.names = FALSE)
-write.csv(df_RMSSE, "RMSSE_summary.csv", row.names = FALSE)
-write.csv(df_RMSSC, "RMSSC_summary.csv", row.names = FALSE)
+write.csv(df_sMAPE, "tables/M3sMAPE.csv", row.names = FALSE)
+write.csv(df_sMAPC, "tables/M3sMAPC.csv", row.names = FALSE)
+write.csv(df_RMSSE, "tables/M3RMSSE.csv", row.names = FALSE)
+write.csv(df_RMSSC, "tables/M3RMSSC.csv", row.names = FALSE)
 
 
 ########################## Statistical comparison ##########################
@@ -527,17 +551,38 @@ setnames(MS_RMSSC,
            "GradNorm","Weighted GCosSim","GCosSim", "RW", "TARW high","TARW low", 
            "UW","NashMTL",'AuxiNash'))
 
-MCB_SMAPE <- nemenyi(as.matrix(MS_SMAPE[,2:16]), plottype = 'vmcb')
-grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+# Define width and height once
+fig_width <- 6
+fig_height <- 6
 
-MCB_SMAPC <- nemenyi(as.matrix(MS_SMAPC[,2:16]), plottype = 'vmcb')
-grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+# Create directory if it doesn't exist
+if (!dir.exists("figures")) dir.create("figures")
 
-MCB_RMSSE <- nemenyi(as.matrix(MS_RMSSE[,2:16]), plottype = 'vmcb')
-grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+########################## Save Nemenyi plots to PDF ##########################
 
-MCB_RMSSC <- nemenyi(as.matrix(MS_RMSSC[,2:16]), plottype = 'vmcb',cex = 1.2)
+# sMAPE
+pdf(paste0("figures/", dataset_selection, "_MCB_SMAPE.pdf"), width = fig_width, height = fig_height)
+MCB_SMAPE <- nemenyi(as.matrix(MS_SMAPE[, 2:16]), plottype = 'vmcb')
 grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
+# sMAPC
+pdf(paste0("figures/", dataset_selection, "_MCB_SMAPC.pdf"), width = fig_width, height = fig_height)
+MCB_SMAPC <- nemenyi(as.matrix(MS_SMAPC[, 2:16]), plottype = 'vmcb')
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
+# RMSSE
+pdf(paste0("figures/", dataset_selection, "_MCB_RMSSE.pdf"), width = fig_width, height = fig_height)
+MCB_RMSSE <- nemenyi(as.matrix(MS_RMSSE[, 2:16]), plottype = 'vmcb')
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+
+# RMSSC
+pdf(paste0("figures/", dataset_selection, "_MCB_RMSSC.pdf"), width = fig_width, height = fig_height)
+MCB_RMSSC <- nemenyi(as.matrix(MS_RMSSC[, 2:16]), plottype = 'vmcb', cex = 1.2)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
 
 # print(MCB_SMAPE$intervals)
 # 
