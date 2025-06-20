@@ -2,7 +2,8 @@ library(Mcomp)
 library(forecast)
 library(data.table)
 library(magrittr)
-
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+print(dirname(rstudioapi::getActiveDocumentContext()$path))
 path <- ''
 
 M3S <- subset(M3, 'monthly')

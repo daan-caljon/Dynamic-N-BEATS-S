@@ -88,6 +88,9 @@ smape_m4 = smape_m4[methods]
 smape_m4 = smape_m4.values.flatten()
 smapc_m4 = pd.read_csv(os.path.join(path, "M4sMAPC.csv"))
 smapc_m4 = smapc_m4[methods]
+smapc_m4 = smapc_m4.values.flatten()
+
+# print(smape_m4)
 
 
 # rmsse_m3 = np.array(
@@ -579,7 +582,11 @@ def plot_smape_smapc(rmsse, rmssc, title):
     # plt.title(title)
     # plt.legend()
     plt.grid(True)
+    folder = "figures"
     save = title + ".pdf"
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    save = os.path.join(folder, save)
     plt.savefig(save, format="pdf", dpi=300, bbox_inches="tight")
     plt.show()
 
@@ -589,7 +596,8 @@ title = "sMAPE vs sMAPC for M3 Monthly Dataset"
 if rank:
     title += " (Rank)"
 plot_smape_smapc(smape_m3, smapc_m3, title)
-
+print("smape",smape_m4)
+print("smapc",smapc_m4)
 # Plot for M4 monthly with Pareto front
 title = "sMAPE vs sMAPC for M4 Monthly Dataset"
 if rank:
