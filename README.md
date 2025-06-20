@@ -1,5 +1,5 @@
 # Using dynamic loss weighting to boost improvements in forecast stability
-This repository provides the code for the paper *"Using dynamic loss weighting to boost improvements in forecast stability"*.
+This repository provides the code for the paper [*Using dynamic loss weighting to boost improvements in forecast stability*](https://arxiv.org/abs/2409.18267).
 
 The structure of the code is as follows:
 ```
@@ -53,7 +53,7 @@ To get the ETS, ARIMA, and THETA forecasts, run the ```*_baselines.R``` files.
 
 To generate the results for the N-BEATS-S variants reported in the paper, run the different scripts for all the methods in the ```M3``` and ```M4``` folders. This will create 5  ```.csv``` files with forecasts for each method (note: newly generated forecasts can slightly deviate from the intermediate results due to random initializations). Alternatively, you can run the ```run_all_methods.py``` script, which runs all methods for one dataset. However, this will take a long time in terms of runtime (several days).
 
-Next, put the folders with the output ```.csv``` files into the ```R scripts``` folder (see ```M*_evaluation.R``` for how these folders are read in). Running the ```M3_evaluation.R``` and ```M4_evaluation.R``` scripts will generate both the tables (Table 2 and Table A.1) and MCB plots (Figures 3, 4, A.1, and A.2). We provide our forecasts for the different methods in the ```R scripts``` folder via this [Google Drive](https://drive.google.com/file/d/1lBIW95MwPcHD5Pnl8mQP7t36G6LQWQGH/view?usp=drive_link).
+Next, put the folders with the output ```.csv``` files into the ```R scripts``` folder (see ```M*_evaluation.R``` for how these folders are read in). Running the ```M3_evaluation.R``` and ```M4_evaluation.R``` scripts will generate both the tables (Table 4 and Table A.1) and MCB plots (Figures 3, 4, A.1, and A.2). We provide our forecasts for the different methods in the ```R scripts``` folder via this [Google Drive](https://drive.google.com/file/d/1lBIW95MwPcHD5Pnl8mQP7t36G6LQWQGH/view?usp=drive_link).
 
 To generate Figure 2, you need to first run ```M3_evaluation.R``` and ```M4_evaluation.R```. Then, ```pareto_plot.py``` will then automatically read the tables with results.
 
