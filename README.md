@@ -14,7 +14,7 @@ Dynamic-N-BEATS-S/
   |_ M4                              #Scripts for M4 forecasts
   |_ Kappa_tuning_M3.py              #Scripts for M3 Figure 8 forecasts
   |_ Kappa_tuning_M4.py              #Scripts for M4 Figure 8 forecasts
-  |_ get_dataset_stats.py              #Scripts for M4 Figure 8 forecasts
+  |_ get_dataset_stats.py            #Calculate descriptive statistics of the datasets
   |_ main.py                         #Generic script to train a dynamic N-BEATS-S model 
   |_ run_all_methods_M3.py           #Run all scripts in M3 folder
   |_ run_all_methods_M4.py           #Run all scripts in M4 folder  
